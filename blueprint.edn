@@ -1,0 +1,12 @@
+{:itonami.blueprint/id "cloud-itonami-8129"
+ :itonami.blueprint/name "Other Building and Industrial Cleaning Activities"
+ :itonami.blueprint/isic-rev5 "8129"
+ :itonami.blueprint/domain :services/industrial-cleaning
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:worker-safety :public-health :transparency]
+ :itonami.blueprint/governor :industrial-cleaning-ops-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger :labor]
+ :itonami.blueprint/optional-technologies []
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented}
