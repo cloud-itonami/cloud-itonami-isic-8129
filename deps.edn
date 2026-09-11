@@ -18,7 +18,7 @@
          io.github.kotoba-lang/jp-go-digital-design-system
          {:local/root "../../kotoba-lang/jp-go-digital-design-system"}}}
   :run {:main-opts ["-m" "industrialcleaningops.sim"]}
-  ;; clojure -M:dev:render-html [out-file] -> regenerate docs/samples/operator-console.html
+  ;; kbb -M:dev:render-html [out-file] -> regenerate docs/samples/operator-console.html
   ;; through the real actor (flagship checklist item 2, ADR-2607189300 Wave1).
   :render-html {:main-opts ["-m" "industrialcleaningops.render-html"]}
   :test {:extra-paths ["test"]
