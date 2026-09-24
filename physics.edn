@@ -1,0 +1,35 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:dev:physics` runs it.
+;;
+;; README "Robotics premise": robots may do pressure washing, chemical
+;; degreasing-machine operation, floor scrubbing and confined-space-adjacent
+;; equipment staging for an industrial cleaning contractor (ISIC 8129), with
+;; this actor as the coordination layer. The physical work declared here:
+;; feeding a pressure-washer lance through a long high-pressure hose, and
+;; dipping steel machine parts in a hot aqueous degreasing tank until the
+;; whole part is hot enough for the grease to release.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isic-8129"
+ :cases
+ [{:id :pressure-washer-hose-loss
+   :kind :pipe-flow
+   :procedure "pressure-washing robot feeds its lance through a 20 m, 3/8 inch high-pressure hose from the skid-mounted pump"
+   :params {:diameter-m 0.0095 :length-m 20.0 :roughness-m 1.5e-6 :density-kg-m3 998.0
+            :viscosity-pa-s 1.0e-3 :pump-efficiency 0.80 :elevation-m 0.0}
+   :sweep {:param :q-m3s :values [1.67e-4 2.5e-4 3.33e-4 4.17e-4 5.0e-4]}
+   :quantity :pressure-drop-pa
+   :limit {:max 500000.0 :basis "estimate: lose no more than 5 % of a 100 bar working pressure in the hose; flows are 10-30 L/min"}
+   :boundary {:lo 1.0e-4 :hi 6.0e-4}}
+  {:id :part-in-hot-degreasing-tank
+   :kind :thermal
+   :procedure "robot dips a steel machine part in the 70 C agitated aqueous degreasing tank; its core must reach 60 C for the grease to release"
+   :params {:conductivity-w-mk 45.0 :density-kg-m3 7850.0 :specific-heat-j-kgk 480.0
+            :t0-c 20.0 :t-hot-c 70.0 :h-front-w-m2k 1000.0 :h-back-w-m2k 0.0 :t-back-ambient-c 20.0
+            :threshold-c 60.0 :duration-s 1800.0 :nodes 9}
+   :sweep {:param :thickness-m :values [0.0025 0.005 0.01 0.02 0.04 0.06]}
+   :quantity :time-to-threshold-s
+   :limit {:max 300.0 :basis "estimate: 5-minute dip cycle of the degreasing line; part modeled as half its thickness (symmetric), h for agitated water"}
+   :boundary {:lo 0.002 :hi 0.08}}]}
